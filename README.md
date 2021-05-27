@@ -1,4 +1,4 @@
-# Rebecca's version of holman does dotfiles
+# America's version of holman does dotfiles
 
 ## quick reminders
 
