@@ -1,4 +1,8 @@
-workdir='~/MasteryCode'
-alias mcode='cd '$workdir
-alias mapi='cd '$workdir'/mastery-api'
-alias mfront='cd '$workdir'/mastery-frontend'
+alias mcode='cd ~/development/MasteryCode' 
+alias twig='cd ~/development/twig' 
+alias mastery='cd ~/development/MasteryCode/mastery-api'
+alias masteryf='cd ~/development/MasteryCode/mastery-frontend'
+alias mirsb='cd ~/development/MIRSCode/mirs-backend'
+alias mirsf='cd ~/development/MIRSCode/mirs-frontend'
+alias rc='rubocop'
+alias rcc='rubocop -a'

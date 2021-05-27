@@ -1,5 +1,6 @@
 export LSCOLORS="exfxcxdxbxegedabagacad"
 export CLICOLOR=true
+export DISABLE_SPRING=true
 
 fpath=($ZSH/functions $fpath)
 
@@ -30,6 +31,8 @@ setopt HIST_REDUCE_BLANKS
 # don't expand aliases _before_ completion has finished
 #   like: git comm-[tab]
 setopt complete_aliases
+
+unsetopt nomatch
 
 bindkey '^[^[[D' backward-word
 bindkey '^[^[[C' forward-word
