@@ -51,10 +51,13 @@ bindkey "^[[B" down-line-or-beginning-search # Down
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 export PATH="/usr/local/opt/openssl/bin:$PATH"
 export PATH="/usr/local/opt/openssl@1.1/bin:$PATH"
-export PATH="/usr/local/opt/postgresql@11/bin:$PATH"
-export PATH="/usr/local/opt/postgresql@11/bin:$PATH"
-export PATH="/usr/local/opt/postgresql@11/bin:$PATH"
-export PATH="/usr/local/opt/postgresql@11/bin:$PATH"
+export PATH="/usr/local/opt/postgresql@13/bin:$PATH"
+export PATH="/usr/local/opt/postgresql@13/bin:$PATH"
+export PATH="/usr/local/opt/postgresql@13/bin:$PATH"
+export PATH="/usr/local/opt/postgresql@13/bin:$PATH"
 
 . /usr/local/opt/asdf/asdf.sh
-. ~/.asdf/plugins/java/set-java-home.zsh
+
+# For Kin Insurance
+export PATH="/usr/local/opt/node@14/bin:$PATH"
+export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/12/bin

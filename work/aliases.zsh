@@ -1,8 +1,7 @@
-alias mcode='cd ~/development/MasteryCode' 
-alias twig='cd ~/development/twig' 
-alias mastery='cd ~/development/MasteryCode/mastery-api'
-alias masteryf='cd ~/development/MasteryCode/mastery-frontend'
-alias mirsb='cd ~/development/MIRSCode/mirs-backend'
-alias mirsf='cd ~/development/MIRSCode/mirs-frontend'
+# Kin
+alias kdc='cd ~/dev/dot-com'
+alias start='./bin/start-dev-server'
+
+# dev
 alias rc='rubocop'
 alias rcc='rubocop -a'
