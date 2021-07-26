@@ -58,8 +58,7 @@ This function should only modify configuration layer settings."
      spell-checking
      syntax-checking
      treemacs
-     version-control
-     yas-new-snippet)
+     version-control)
 
 
    ;; List of additional packages that will be installed without being wrapped
