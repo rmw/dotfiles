@@ -38,7 +38,10 @@ This function should only modify configuration layer settings."
      ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
      ;; `M-m f e R' (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     auto-completion
+     (auto-completion :variables
+                      auto-completion-tab-key-behavior 'cycle
+                      auto-complete-enable-snippets-in-popup t
+                      auto-completion-enable-sort-by-usage t)
      ;; better-defaults
      emacs-lisp
      evil-commentary
@@ -49,7 +52,8 @@ This function should only modify configuration layer settings."
      (ruby :variables ruby-test-runner `rspec
            ruby-prettier-on-save t
            ruby-version-manager 'rbenv
-           ruby-enable-enh-ruby-mode t)
+           ruby-enable-enh-ruby-mode t
+           )
      ruby-on-rails
      ;; lsp
      ;; multiple-cursors
@@ -59,8 +63,8 @@ This function should only modify configuration layer settings."
             shell-default-position 'right
             shell-default-shell `vterm
             shell-default-term-shell "/bin/zsh")
-     spell-checking
-     syntax-checking
+     ;; spell-checking
+     ;; syntax-checking
      yaml
      version-control)
 
@@ -546,6 +550,14 @@ before packages are loaded."
   ;;(setq mac-option-modifier 'super)
   ;;(setq mac-command-modifier 'meta)
 
+  (add-hook 'prog-mode-hook 'company-mode)
+
+  (define-key evil-normal-state-map (kbd "C-k") 'drag-stuff-up)
+  (define-key evil-normal-state-map (kbd "C-j") 'drag-stuff-down)
+
+  (define-key evil-insert-state-map (kbd "C-k") 'drag-stuff-up)
+  (define-key evil-insert-state-map (kbd "C-j") 'drag-stuff-down)
+
   (global-set-key (kbd "s-SPC") 'just-one-space)
 
   (defun duplicate-line()
@@ -567,10 +579,10 @@ before packages are loaded."
   (setq rspec-use-spring-when-possible nil)
   (setq rspec-use-bundler-when-possible nil)
 
-  (add-hook 'ruby-mode-hook
-            (lambda ()
-              (setq-local flycheck-command-wrapper-function
-                          (lambda (command) (append '("bundle" "exec") command)))))
+  ;; (add-hook 'ruby-mode-hook
+  ;;           (lambda ()
+  ;;             (setq-local flycheck-command-wrapper-function
+  ;;                         (lambda (command) (append '("bundle" "exec") command)))))
 
   ;; Multiple Cursors
 
@@ -584,6 +596,9 @@ before packages are loaded."
   ;; Ruler
   (global-display-fill-column-indicator-mode)
 
+  (yas-global-mode t)
+  (add-hook 'yas-minor-mode-hook(lambda ()
+                                  (yas-activate-extra-mode 'fundamental-mode)))
   )
 
 
@@ -601,7 +616,12 @@ This function is called at the very end of Spacemacs initialization."
  ;; If there is more than one, they won't work right.
  '(evil-want-Y-yank-to-eol nil)
  '(package-selected-packages
-   '(tern npm-mode nodejs-repl livid-mode skewer-mode js2-refactor js2-mode js-doc import-js grizzl helm-gtags ggtags dap-mode lsp-treemacs bui lsp-mode counsel-gtags counsel swiper ivy add-node-modules-path yaml-mode web-mode web-beautify tagedit slim-mode scss-mode sass-mode pug-mode impatient-mode htmlize simple-httpd helm-css-scss haml-mode emmet-mode company-web web-completion-data multiple-cursors enh-ruby-mode git-gutter-fringe+ fringe-helper git-gutter+ evil-commentary browse-at-remote yasnippet-snippets helm-company helm-c-yasnippet fuzzy company auto-yasnippet yasnippet ac-ispell auto-complete xterm-color vterm terminal-here shell-pop multi-term eshell-z eshell-prompt-extras esh-help prettier-js ws-butler writeroom-mode winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package undo-tree treemacs-projectile treemacs-persp treemacs-magit treemacs-icons-dired treemacs-evil toc-org symon symbol-overlay string-inflection string-edit spaceline-all-the-icons smeargle seeing-is-believing rvm ruby-tools ruby-test-mode ruby-refactor ruby-hash-syntax rubocopfmt rubocop rspec-mode robe restart-emacs rbenv rainbow-delimiters quickrun projectile-rails popwin password-generator paradox overseer org-superstar open-junk-file nameless multi-line mmm-mode minitest markdown-toc macrostep lorem-ipsum link-hint indent-guide hybrid-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-purpose helm-projectile helm-org helm-mode-manager helm-make helm-ls-git helm-gitignore helm-git-grep helm-flx helm-descbinds helm-ag google-translate golden-ratio gitignore-templates gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md forge font-lock+ flyspell-correct-helm flycheck-pos-tip flycheck-package flycheck-elsa flx-ido feature-mode fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-surround evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-easymotion evil-collection evil-cleverparens evil-args evil-anzu eval-sexp-fu emr elisp-slime-nav editorconfig dumb-jump drag-stuff dotenv-mode dired-quick-sort diminish define-word column-enforce-mode clean-aindent-mode chruby centered-cursor-mode bundler auto-highlight-symbol auto-dictionary auto-compile aggressive-indent ace-link ace-jump-helm-line)))
+   '(company-quickhelp company-statistics tern npm-mode nodejs-repl livid-mode skewer-mode js2-refactor js2-mode js-doc import-js grizzl helm-gtags ggtags dap-mode lsp-treemacs bui lsp-mode counsel-gtags counsel swiper ivy add-node-modules-path yaml-mode web-mode web-beautify tagedit slim-mode scss-mode sass-mode pug-mode impatient-mode htmlize simple-httpd helm-css-scss haml-mode emmet-mode company-web web-completion-data multiple-cursors enh-ruby-mode git-gutter-fringe+ fringe-helper git-gutter+ evil-commentary browse-at-remote yasnippet-snippets helm-company helm-c-yasnippet fuzzy company auto-yasnippet yasnippet ac-ispell auto-complete xterm-color vterm terminal-here shell-pop multi-term eshell-z eshell-prompt-extras esh-help prettier-js ws-butler writeroom-mode winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package undo-tree treemacs-projectile treemacs-persp treemacs-magit treemacs-icons-dired treemacs-evil toc-org symon symbol-overlay string-inflection string-edit spaceline-all-the-icons smeargle seeing-is-believing rvm ruby-tools ruby-test-mode ruby-refactor ruby-hash-syntax rubocopfmt rubocop rspec-mode robe restart-emacs rbenv rainbow-delimiters quickrun projectile-rails popwin password-generator paradox overseer org-superstar open-junk-file nameless multi-line mmm-mode minitest markdown-toc macrostep lorem-ipsum link-hint indent-guide hybrid-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-purpose helm-projectile helm-org helm-mode-manager helm-make helm-ls-git helm-gitignore helm-git-grep helm-flx helm-descbinds helm-ag google-translate golden-ratio gitignore-templates gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md forge font-lock+ flyspell-correct-helm flycheck-pos-tip flycheck-package flycheck-elsa flx-ido feature-mode fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-surround evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-easymotion evil-collection evil-cleverparens evil-args evil-anzu eval-sexp-fu emr elisp-slime-nav editorconfig dumb-jump drag-stuff dotenv-mode dired-quick-sort diminish define-word column-enforce-mode clean-aindent-mode chruby centered-cursor-mode bundler auto-highlight-symbol auto-dictionary auto-compile aggressive-indent ace-link ace-jump-helm-line))
+ '(warning-suppress-types
+   '(((flycheck syntax-checker))
+     ((flycheck syntax-checker))
+     ((flycheck syntax-checker))
+     ((flycheck syntax-checker)))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
