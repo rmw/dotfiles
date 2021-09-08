@@ -401,7 +401,7 @@ It should only modify the values of Spacemacs settings."
    ;; but lines are only visual lines are counted. For example, folded lines
    ;; will not be counted and wrapped lines are counted as multiple lines.
    ;; This variable can also be set to a property list for finer control:
-   dotspacemacs-line-numbers '(:relative t :visual nil :size-limit-kb 1000)
+   dotspacemacs-line-numbers '(:absolute t :visual nil :size-limit-kb 1000)
    ;; When used in a plist, `visual' takes precedence over `relative'.
    ;; (default nil)
    ;; dotspacemacs-line-numbers nil
@@ -596,9 +596,13 @@ before packages are loaded."
   ;; Ruler
   (global-display-fill-column-indicator-mode)
 
-  (yas-global-mode t)
-  (add-hook 'yas-minor-mode-hook(lambda ()
-                                  (yas-activate-extra-mode 'fundamental-mode)))
+  ;; (yas-global-mode 1)
+  ;; (add-hook 'yas-minor-mode-hook(lambda ()
+                                  ;; (yas-activate-extra-mode 'fundamental-mode)))
+
+  (global-set-key (kbd "C-<return>") 'hippie-expand)
+
+
   )
 
 
