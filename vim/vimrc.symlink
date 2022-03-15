@@ -14,3 +14,5 @@ set shiftwidth=2
 set hls
 set number
 
+" Auto detect current directory
+set autochdir
