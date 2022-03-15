@@ -1,13 +1,27 @@
+" Disable compatibility with vi which can cause unexpected issues.
+set nocompatible
+
+" Enable type file detection. Vim will be able to try to detect the type of file in use.
+filetype on
+
+" Enable plugins and load plugin for the detected file type.
+filetype plugin on
+
+" Load an indent file for the detected file type.
+filetype indent on
+
+" Highlight cursor line underneath the cursor horizontally.
+set cursorline
+
 syntax on
 
-" Wrap gitcommit file types at the appropriate length
-filetype indent plugin on
-filetype plugin indent on
 " On pressing tab, insert 2 spaces
 set expandtab
+
 " show existing tab with 2 spaces width
 set tabstop=2
 set softtabstop=2
+
 " when indenting with '>', use 2 spaces width
 set shiftwidth=2
 
