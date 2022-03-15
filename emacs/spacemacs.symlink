@@ -549,14 +549,11 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
-  ;;(setq mac-option-modifier 'super)
-  ;;(setq mac-command-modifier 'meta)
-
   (add-hook 'prog-mode-hook 'company-mode)
 
-  (define-key evil-normal-state-map (kbd "C-k") 'drag-stuff-up)
+  ;;Use in visual mode
   (define-key evil-normal-state-map (kbd "C-j") 'drag-stuff-down)
-
+  (define-key evil-normal-state-map (kbd "C-k") 'drag-stuff-up)
   (define-key evil-insert-state-map (kbd "C-k") 'drag-stuff-up)
   (define-key evil-insert-state-map (kbd "C-j") 'drag-stuff-down)
 
@@ -580,32 +577,17 @@ before packages are loaded."
             (lambda () (add-hook 'before-save-hook 'elixir-format nil t)))
 
   ;; Ruby
-
   (setq rspec-autosave-buffer t)
   (setq rspec-spec-command "bin/rspec")
   (setq rspec-use-spring-when-possible nil)
   (setq rspec-use-bundler-when-possible nil)
 
-  ;; (add-hook 'ruby-mode-hook
-  ;;           (lambda ()
-  ;;             (setq-local flycheck-command-wrapper-function
-  ;;                         (lambda (command) (append '("bundle" "exec") command)))))
-
-  ;; Multiple Cursors
-
-  (require 'multiple-cursors)
-
-  (global-set-key (kbd "S-<mouse-1>") 'mc/add-cursor-on-click)
 
   ;; GitHub
   (setq-default git-magit-status-fullscreen t)
 
   ;; Ruler
   (global-display-fill-column-indicator-mode)
-
-  ;; (yas-global-mode 1)
-  ;; (add-hook 'yas-minor-mode-hook(lambda ()
-                                  ;; (yas-activate-extra-mode 'fundamental-mode)))
 
   (global-set-key (kbd "C-<return>") 'hippie-expand)
 
