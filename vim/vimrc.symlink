@@ -70,6 +70,10 @@ Plug 'elixir-editors/vim-elixir'
 " Linting
 Plug 'dense-analysis/ale'
 
+" Toolbar
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
 " Whitespace
 Plug 'ntpeters/vim-better-whitespace'
 let g:strip_whitespace_on_save = 1
