@@ -75,6 +75,10 @@ call plug#begin()
   "Git
   Plug 'tpope/vim-fugitive'
 
+  " Surround strings
+  " This does NOT work
+  "Plug 'tpope/vim-surround'
+
   " Toolbar
   Plug 'vim-airline/vim-airline'
   Plug 'vim-airline/vim-airline-themes'
@@ -164,6 +168,8 @@ nmap <leader>w :w!<cr>
 " Open fils search
 nmap <leader>ff :Files<cr>
 
+" Run Git commands
+nmap <leader>g :Git
 
 " :W sudo saves the file
 " (useful for handling the permission-denied error)
@@ -397,19 +403,12 @@ set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ 
 " Strip trailing whitespace
 nnoremap <leader>nw :%s/\s\+$//e<cr>:let @/=''<CR>
 
-" Move a line of text using ALT+[jk] or Command+[jk] on mac
-" This does NOT work
-"nmap <M-j> mz:m+<cr>`z
-"nmap <M-k> mz:m-2<cr>`z
-"vmap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
-"vmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
-"
-"if has("mac") || has("macunix")
-"  nmap <D-j> <M-j>
-"  nmap <D-k> <M-k>
-"  vmap <D-j> <M-j>
-"  vmap <D-k> <M-k>
-"endif
+" Move a line of text using Command+[jk] on mac
+nnoremap K :m .-2<CR>==
+nnoremap J :m .+1<CR>==
+vnoremap K :m '<-2<CR>gv=gv
+vnoremap J :m '>+1<CR>gv=gv
+
 
 " Delete trailing white space on save, useful for some filetypes ;)
 fun! CleanExtraSpaces()
