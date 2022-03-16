@@ -156,6 +156,10 @@ let mapleader = ","
 " Fast saving
 nmap <leader>w :w!<cr>
 
+" Open fils search
+nmap <leader>ff :Files<cr>
+
+
 " :W sudo saves the file
 " (useful for handling the permission-denied error)
 command! W execute 'w !sudo tee % > /dev/null' <bar> edit!
