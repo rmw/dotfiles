@@ -10,6 +10,9 @@
 "           https://github.com/amix/vimrc
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Enable syntax highlighting
+syntax enable
+
 "----------------------------------------------------------------------------//
 " Plugins                                                                  {{{
 "----------------------------------------------------------------------------//
@@ -61,8 +64,13 @@ call plug#begin()
 	"}}}
 ""}}}
 
+"Elixir
 Plug 'elixir-editors/vim-elixir'
 
+" Whitespace
+Plug 'ntpeters/vim-better-whitespace'
+let g:strip_whitespace_on_save = 1
+let g:strip_whitespace_confirm=0
 "Multi-Cursor
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 let g:VM_maps = {}
@@ -234,9 +242,6 @@ set foldcolumn=1
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Colors and Fonts
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Enable syntax highlighting
-syntax enable
-
 " Enable 256 colors palette in Gnome Terminal
 if $COLORTERM == 'gnome-terminal'
     set t_Co=256
