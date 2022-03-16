@@ -11,17 +11,110 @@
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "----------------------------------------------------------------------------//
-" Plugings                                                                  {{{
+" Plugins                                                                  {{{
 "----------------------------------------------------------------------------//
 
 call plug#begin()
-" Language specific
-Plug 'tpope/vim-rails'
-" Navigation/searching
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-" Multi-cursors"
-Plug 'mg979/vim-visual-multi', {'branch': 'master'}
+"------------------+
+" Filetype       {{{
+"------------------+
+	" JavaScript, JSON, ES6, JSX -------------{{{
+	Plug 'git@github.com:jelera/vim-javascript-syntax.git', { 'for': 'javascript' }
+	Plug 'leafgarland/typescript-vim' " TypeScript syntax
+	Plug 'maxmellon/vim-jsx-pretty'   " JS and JSX syntax
+	Plug 'jparise/vim-graphql'        " GraphQL syntax
+	"}}}
 
+	" HTML/XML/CSS -----------{{{
+	Plug 'mattn/emmet-vim'
+		let g:user_emmet_leader_key='<C-E>'
+	Plug 'othree/html5.vim'
+	"}}}
+
+
+	" Ruby -------------------{{{
+	Plug 'slim-template/vim-slim'
+	Plug 'vim-ruby/vim-ruby'
+	Plug 'vim-utils/vim-ruby-fold' "{{{
+		" let g:ruby_fold_lines_limit = 200
+	"}}}
+	Plug 'tpope/vim-rake'
+	Plug 'tpope/vim-bundler'
+	Plug 'tpope/vim-rails'
+	Plug 'tpope/vim-endwise' "{{{
+		" Wisely add 'end' or (equivalent) in Ruby, Shell Scripting, Elixir, Lua,
+		" Haskell, etc.
+
+		" disable mapping to not break coc.nvim
+		let g:endwise_no_mappings = 1
+		"}}}
+	"}}}
+
+	" Markdown ---------------{{{
+	Plug 'tpope/vim-markdown'
+	Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
+	"}}}
+
+	" Python ---------------{{{
+	Plug 'vim-python/python-syntax'
+		let g:python_highlight_all = 1
+	"}}}
+""}}}
+
+Plug 'elixir-editors/vim-elixir'
+
+"Multi-Cursor
+Plug 'mg979/vim-visual-multi', {'branch': 'master'}
+let g:VM_maps = {}
+let g:VM_maps['Find Under']         = '<C-d>'           " replace C-n
+let g:VM_maps['Find Subword Under'] = '<C-d>'           " replace visual C-n
+" Navigation and file search
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } "{{{
+	" Interactive fuzzy finder
+	Plug 'junegunn/fzf.vim'
+	nnoremap <silent> <C-P> :GFiles<Enter>
+	nnoremap <silent> <C-B>b :Buffers<Enter>
+	nnoremap <silent> <C-B>h :History<Enter>
+	nnoremap <silent> <Leader>ag :Rg <C-R><C-W><CR>
+	" Ripgrep support with FZF
+	nnoremap <silent> \ :Rg<CR>
+
+	" let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
+	" let g:fzf_layout = { 'down' : '~40%' }
+
+	" CTRL-A CTRL-Q to select all and build quickfix list
+
+	function! s:build_quickfix_list(lines)
+		call setqflist(map(copy(a:lines), '{ "filename": v:val }'))
+		copen
+		cc
+	endfunction
+
+	let g:fzf_action = {
+				\ 'ctrl-q': function('s:build_quickfix_list'),
+				\ 'ctrl-t': 'tab split',
+				\ 'ctrl-x': 'split',
+				\ 'ctrl-v': 'vsplit' }
+
+	let $FZF_DEFAULT_OPTS = '--bind ctrl-a:select-all'
+	"
+"}}}
+
+Plug 'preservim/nerdtree' "{{{
+	" Tree file system explorer for Vim
+
+	augroup NerdTree
+		" autocmd BufWinEnter * NERDTreeFind
+		autocmd StdinReadPre * let s:std_in=1
+		autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+	augroup END
+
+	nnoremap <c-t> :NERDTreeToggle<Enter>
+	nnoremap <silent> <C-B>t :NERDTreeFind<Enter>
+	let NERDTreeQuitOnOpen = 1
+	let NERDTreeMinimalUI = 1
+	let NERDTreeDirArrows = 1
+"}}}
 call plug#end()
 
 "----------------------------------------------------------------------------//
@@ -56,6 +149,13 @@ command! W execute 'w !sudo tee % > /dev/null' <bar> edit!
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"----------------------------------------------------------------
+" Multicursor mappings
+let g:VM_maps = {}
+let g:VM_maps['Find Under']         = '<C-d>'           " replace C-n
+let g:VM_maps['Find Subword Under'] = '<C-d>'           " replace visual C-n
+"---------------------------------------------------------------
+"
 " Set 7 lines to the cursor - when moving vertically using j/k
 set so=7
 
@@ -273,8 +373,8 @@ set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Editing mappings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Remap VIM 0 to first non-blank character
-map 0 ^
+" Strip trailing whitespace
+nnoremap <leader>nw :%s/\s\+$//e<cr>:let @/=''<CR>
 
 " Move a line of text using ALT+[jk] or Command+[jk] on mac
 nmap <M-j> mz:m+<cr>`z
