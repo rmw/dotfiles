@@ -67,6 +67,9 @@ call plug#begin()
 "Elixir
 Plug 'elixir-editors/vim-elixir'
 
+" Linting
+Plug 'dense-analysis/ale'
+
 " Whitespace
 Plug 'ntpeters/vim-better-whitespace'
 let g:strip_whitespace_on_save = 1
