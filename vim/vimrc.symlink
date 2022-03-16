@@ -6,8 +6,11 @@
 "       Get this config, nice color schemes and lots of plugins!
 "
 "       Installed the initial version from:
-"
 "           https://github.com/amix/vimrc
+"
+"       Inspired by:
+"          https://github.com/jelera/vimconfig/blob/master/vimrc
+"
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Enable syntax highlighting
@@ -22,7 +25,6 @@ call plug#begin()
 " Filetype       {{{
 "------------------+
 	" JavaScript, JSON, ES6, JSX -------------{{{
-	Plug 'git@github.com:jelera/vim-javascript-syntax.git', { 'for': 'javascript' }
 	Plug 'leafgarland/typescript-vim' " TypeScript syntax
 	Plug 'maxmellon/vim-jsx-pretty'   " JS and JSX syntax
 	Plug 'jparise/vim-graphql'        " GraphQL syntax
@@ -64,72 +66,75 @@ call plug#begin()
 	"}}}
 ""}}}
 
-"Elixir
-Plug 'elixir-editors/vim-elixir'
+  "Elixir
+  Plug 'elixir-editors/vim-elixir'
 
-" Linting
-Plug 'dense-analysis/ale'
+  " Linting
+  Plug 'dense-analysis/ale'
 
-" Toolbar
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+  "Git
+  Plug 'tpope/vim-fugitive'
 
-" Whitespace
-Plug 'ntpeters/vim-better-whitespace'
-let g:strip_whitespace_on_save = 1
-let g:strip_whitespace_confirm=0
-"Multi-Cursor
-Plug 'mg979/vim-visual-multi', {'branch': 'master'}
-let g:VM_maps = {}
-let g:VM_maps['Find Under']         = '<C-d>'           " replace C-n
-let g:VM_maps['Find Subword Under'] = '<C-d>'           " replace visual C-n
-" Navigation and file search
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } "{{{
-	" Interactive fuzzy finder
-	Plug 'junegunn/fzf.vim'
-	nnoremap <silent> <C-P> :GFiles<Enter>
-	nnoremap <silent> <C-B>b :Buffers<Enter>
-	nnoremap <silent> <C-B>h :History<Enter>
-	nnoremap <silent> <Leader>ag :Rg <C-R><C-W><CR>
-	" Ripgrep support with FZF
-	nnoremap <silent> \ :Rg<CR>
+  " Toolbar
+  Plug 'vim-airline/vim-airline'
+  Plug 'vim-airline/vim-airline-themes'
 
-	" let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
-	" let g:fzf_layout = { 'down' : '~40%' }
+  " Whitespace
+  Plug 'ntpeters/vim-better-whitespace'
+  let g:strip_whitespace_on_save = 1
+  let g:strip_whitespace_confirm=0
+  "Multi-Cursor
+  Plug 'mg979/vim-visual-multi', {'branch': 'master'}
+  let g:VM_maps = {}
+  let g:VM_maps['Find Under']         = '<C-d>'           " replace C-n
+  let g:VM_maps['Find Subword Under'] = '<C-d>'           " replace visual C-n
+  " Navigation and file search
+  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } "{{{
+  	" Interactive fuzzy finder
+  	Plug 'junegunn/fzf.vim'
+  	nnoremap <silent> <C-P> :GFiles<Enter>
+  	nnoremap <silent> <C-B>b :Buffers<Enter>
+  	nnoremap <silent> <C-B>h :History<Enter>
+  	nnoremap <silent> <Leader>ag :Rg <C-R><C-W><CR>
+  	" Ripgrep support with FZF
+  	nnoremap <silent> \ :Rg<CR>
 
-	" CTRL-A CTRL-Q to select all and build quickfix list
+  	" let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
+  	" let g:fzf_layout = { 'down' : '~40%' }
 
-	function! s:build_quickfix_list(lines)
-		call setqflist(map(copy(a:lines), '{ "filename": v:val }'))
-		copen
-		cc
-	endfunction
+  	" CTRL-A CTRL-Q to select all and build quickfix list
 
-	let g:fzf_action = {
-				\ 'ctrl-q': function('s:build_quickfix_list'),
-				\ 'ctrl-t': 'tab split',
-				\ 'ctrl-x': 'split',
-				\ 'ctrl-v': 'vsplit' }
+  	function! s:build_quickfix_list(lines)
+  		call setqflist(map(copy(a:lines), '{ "filename": v:val }'))
+  		copen
+  		cc
+  	endfunction
 
-	let $FZF_DEFAULT_OPTS = '--bind ctrl-a:select-all'
-	"
-"}}}
+  	let g:fzf_action = {
+  				\ 'ctrl-q': function('s:build_quickfix_list'),
+  				\ 'ctrl-t': 'tab split',
+  				\ 'ctrl-x': 'split',
+  				\ 'ctrl-v': 'vsplit' }
 
-Plug 'preservim/nerdtree' "{{{
-	" Tree file system explorer for Vim
+  	let $FZF_DEFAULT_OPTS = '--bind ctrl-a:select-all'
+  	"
+  "}}}
 
-	augroup NerdTree
-		" autocmd BufWinEnter * NERDTreeFind
-		autocmd StdinReadPre * let s:std_in=1
-		autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-	augroup END
+  Plug 'preservim/nerdtree' "{{{
+  	" Tree file system explorer for Vim
 
-	nnoremap <c-t> :NERDTreeToggle<Enter>
-	nnoremap <silent> <C-B>t :NERDTreeFind<Enter>
-	let NERDTreeQuitOnOpen = 1
-	let NERDTreeMinimalUI = 1
-	let NERDTreeDirArrows = 1
-"}}}
+  	augroup NerdTree
+  		" autocmd BufWinEnter * NERDTreeFind
+  		autocmd StdinReadPre * let s:std_in=1
+  		autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+  	augroup END
+
+  	nnoremap <c-t> :NERDTreeToggle<Enter>
+  	nnoremap <silent> <C-B>t :NERDTreeFind<Enter>
+  	let NERDTreeQuitOnOpen = 1
+  	let NERDTreeMinimalUI = 1
+  	let NERDTreeDirArrows = 1
+  "}}}
 call plug#end()
 
 "----------------------------------------------------------------------------//
@@ -237,7 +242,7 @@ set mat=2
 
 " No annoying sound on errors
 set noerrorbells
-set novisualbell
+set visualbell
 set t_vb=
 set tm=500
 
@@ -298,7 +303,7 @@ set expandtab
 " Be smart when using tabs ;)
 set smarttab
 
-" 1 tab == 4 spaces
+" 1 tab == 2 spaces
 set shiftwidth=2
 set tabstop=2
 
@@ -393,17 +398,18 @@ set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ 
 nnoremap <leader>nw :%s/\s\+$//e<cr>:let @/=''<CR>
 
 " Move a line of text using ALT+[jk] or Command+[jk] on mac
-nmap <M-j> mz:m+<cr>`z
-nmap <M-k> mz:m-2<cr>`z
-vmap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
-vmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
-
-if has("mac") || has("macunix")
-  nmap <D-j> <M-j>
-  nmap <D-k> <M-k>
-  vmap <D-j> <M-j>
-  vmap <D-k> <M-k>
-endif
+" This does NOT work
+"nmap <M-j> mz:m+<cr>`z
+"nmap <M-k> mz:m-2<cr>`z
+"vmap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
+"vmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
+"
+"if has("mac") || has("macunix")
+"  nmap <D-j> <M-j>
+"  nmap <D-k> <M-k>
+"  vmap <D-j> <M-j>
+"  vmap <D-k> <M-k>
+"endif
 
 " Delete trailing white space on save, useful for some filetypes ;)
 fun! CleanExtraSpaces()
