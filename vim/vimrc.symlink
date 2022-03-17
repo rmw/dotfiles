@@ -40,9 +40,9 @@ call plug#begin()
 	" Ruby -------------------{{{
 	Plug 'slim-template/vim-slim'
 	Plug 'vim-ruby/vim-ruby'
-	Plug 'vim-utils/vim-ruby-fold' "{{{
-		" let g:ruby_fold_lines_limit = 200
-	"}}}
+	"Plug 'vim-utils/vim-ruby-fold' "{{{
+	"	" let g:ruby_fold_lines_limit = 200
+	""}}}
 	Plug 'tpope/vim-rake'
 	Plug 'tpope/vim-bundler'
 	Plug 'tpope/vim-rails'
@@ -258,7 +258,7 @@ if has("gui_macvim")
 endif
 
 " Add a bit extra margin to the left
-set foldcolumn=1
+"set foldcolumn=1
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
