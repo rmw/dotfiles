@@ -139,6 +139,9 @@ call plug#begin()
   	let NERDTreeMinimalUI = 1
   	let NERDTreeDirArrows = 1
   "}}}
+  "
+  "Color scheme
+  Plug 'lifepillar/vim-gruvbox8'
 call plug#end()
 
 "----------------------------------------------------------------------------//
@@ -262,37 +265,43 @@ endif
 
 " Add a bit extra margin to the left
 "set foldcolumn=1
+"----------------------------------------------------------------------------//
+" USER INTERFACE                                                            {{{
+"------------------------------------+---------------------------------------//
+" Look and Feel settings           {{{
+"------------------------------------+
+set termguicolors
 
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Colors and Fonts
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Enable 256 colors palette in Gnome Terminal
-if $COLORTERM == 'gnome-terminal'
-    set t_Co=256
-endif
-
-try
-    colorscheme desert
-catch
-endtry
+" let g:gruvbox_contrast_dark = 'hard'
+colorscheme gruvbox8_hard
 
 set background=dark
 
-" Set extra options when running in GUI mode
-if has("gui_running")
-    set guioptions-=T
-    set guioptions-=e
-    set t_Co=256
-    set guitablabel=%M\ %t
+if has('gui_running')
+	" GVIM / MacVim"{{{
+	set guioptions-=T
+	set guioptions+=c
+	" Font Selection
+	if has('mac')
+		" For MacVim
+		set guifont=CaskaydiaCove\ Nerd\ Font\ Mono:h15
+	else
+		" For Linux gVim
+		set guifont=Fira\ Code\ 12
+	endif
+	"}}}
+else
+	" Terminal Vim"{{{
+	set t_Co=256
+	"}}}
 endif
 
-" Set utf8 as standard encoding and en_US as the standard language
-set encoding=utf8
-
-" Use Unix as the standard file type
-set ffs=unix,dos,mac
-
+hi  Comment  cterm=italic
+hi  gitcommitFirstLine ctermfg=81
+hi  gitcommitSummary ctermfg=81
+hi  RubyKeywordAsMethod ctermfg=44
+set cursorline
+" }}}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Files, backups and undo
