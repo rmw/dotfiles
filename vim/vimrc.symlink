@@ -168,8 +168,8 @@ let mapleader = ","
 " Fast saving
 nmap <leader>w :w!<cr>
 
-" Open fils search
-nmap <leader>ff :Files<cr>
+" Open files search
+nmap <leader>f :Files<cr>
 
 " Run Git commands
 nmap <leader>g :Git
