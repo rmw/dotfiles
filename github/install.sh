@@ -1,4 +1,3 @@
-#!/bin/sh
 #
 # GitHub CLI
 #
@@ -11,5 +10,3 @@ if test $(command -v brew); then
     brew install gh
   fi
 fi
-
-exit 0
