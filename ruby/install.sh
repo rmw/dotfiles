@@ -1,28 +1,19 @@
 if test $(command -v brew); then
-  if test $(command -v rbenv); then
-    echo 'Upgrading rbenv...'
-    brew upgrade rbenv ruby-build
-  else
-    echo 'Installing rbenv ...'
-    brew install rbenv ruby-build
+  if test ! $(command -v libyaml); then
+    echo 'Installing libyaml...'
+    brew install libyaml
   fi
-  echo 'Installing latest stable ruby version'
-  latest_version=$(rbenv install -l | awk -F '.' '
-   /^[[:space:]]*[0-9]+\.[0-9]+\.[0-9]+[[:space:]]*$/ {
-      if ( ($1 * 100 + $2) * 100 + $3 > Max ) {
-         Max = ($1 * 100 + $2) * 100 + $3
-         Version=$0
-         }
-      }
-   END { print Version }')
-  rbenv install $latest_version
-
-  if [[ $(rbenv global) = *system* ]]; then
-    rbenv global $latest_version
+  if test ! $(command -v mise); then
+    echo 'Installing mise...'
+    brew install mise
   fi
+fi
 
-  echo 'Rehash rbenv and update rubygems'
-  rbenv rehash
+# Install and globally set latest ruby using mise
+if test $(command -v mise); then
+  echo 'Installing and globally setting latest ruby with mise...'
+  mise install ruby@latest
+  mise global ruby@latest
   gem update --system
   sudo gem install rails
 fi

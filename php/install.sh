@@ -15,3 +15,16 @@
 #     brew install wp-cli
 #   fi
 # fi
+
+# if test $(command -v brew); then
+#   if test ! $(command -v mise); then
+#     echo 'Installing mise...'
+#     brew install mise
+#   fi
+# fi
+
+# if test $(command -v mise); then
+#   echo 'Installing latest php with mise...'
+#   mise install php@latest
+#   mise use php@latest
+# fi

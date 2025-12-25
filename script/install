@@ -7,4 +7,16 @@ set -e
 cd "$(dirname $0)"/..
 
 # find the installers and run them iteratively
-find . -name install.sh | while read installer ; do sh -c "${installer}" ; done
+find . -name install.sh | while read installer ; do bash "${installer}" ; done
+
+# Ensure Homebrew is in PATH for future shells
+BREW_PATH="/opt/homebrew/bin/brew"
+PROFILE="$HOME/.zprofile"
+if [ -f "$BREW_PATH" ]; then
+  if ! grep -q 'eval "\$\(/opt/homebrew/bin/brew shellenv\)"' "$PROFILE" 2>/dev/null; then
+    echo "Adding Homebrew to PATH in $PROFILE"
+    echo '' >> "$PROFILE"
+    echo 'eval "$('/opt/homebrew/bin/brew' shellenv)"' >> "$PROFILE"
+    eval "$('/opt/homebrew/bin/brew' shellenv)"
+  fi
+fi
