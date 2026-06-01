@@ -140,6 +140,23 @@ install_dotfiles () {
 setup_gitconfig
 install_dotfiles
 
+# Create symlink to dotfiles directory
+info 'setting up ~/.dotfiles symlink'
+if [ -L "$HOME/.dotfiles" ] || [ -d "$HOME/.dotfiles" ]
+then
+  if [ "$(readlink $HOME/.dotfiles)" == "$DOTFILES_ROOT" ]
+  then
+    success "~/.dotfiles symlink already correct"
+  else
+    rm -rf "$HOME/.dotfiles"
+    ln -s "$DOTFILES_ROOT" "$HOME/.dotfiles"
+    success "linked $DOTFILES_ROOT to ~/.dotfiles"
+  fi
+else
+  ln -s "$DOTFILES_ROOT" "$HOME/.dotfiles"
+  success "linked $DOTFILES_ROOT to ~/.dotfiles"
+fi
+
 # If we're on a Mac, let's install and setup homebrew.
 if [ "$(uname -s)" == "Darwin" ]
 then
