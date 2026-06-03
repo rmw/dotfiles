@@ -6,8 +6,45 @@ set -e
 
 cd "$(dirname $0)"/..
 
-# find the installers and run them iteratively
-find . -name install.sh | while read installer ; do bash "${installer}" ; done
+RUN_MACOS_SOFTWARE_UPDATE=false
+for arg in "$@"; do
+  case "$arg" in
+    --macos-update)
+      RUN_MACOS_SOFTWARE_UPDATE=true
+      ;;
+  esac
+done
+
+# Run the priority installers first so other installers can depend on Brew and mise.
+PRIORITY_INSTALLERS=(
+  "./homebrew/install.sh"
+  "./mise/install.sh"
+)
+for installer in "${PRIORITY_INSTALLERS[@]}"; do
+  if [ -f "$installer" ]; then
+    bash "$installer"
+  fi
+done
+
+# find the remaining installers and run them iteratively
+find . -name install.sh -print | while read -r installer ; do
+  skip=false
+  for priority in "${PRIORITY_INSTALLERS[@]}"; do
+    if [ "$installer" = "$priority" ]; then
+      skip=true
+      break
+    fi
+  done
+  if [ "$skip" = true ]; then
+    continue
+  fi
+
+  if [ "$installer" = "./macos/install.sh" ] && [ "$RUN_MACOS_SOFTWARE_UPDATE" = true ]; then
+    bash "$installer" --macos-update
+  else
+    bash "$installer"
+  fi
+done
 
 # Ensure Homebrew is in PATH for future shells
 BREW_PATH="/opt/homebrew/bin/brew"

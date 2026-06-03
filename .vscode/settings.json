@@ -1,3 +1,11 @@
 {
-  "editor.fontSize": 14
+    "github.copilot.nextEditSuggestions.enabled": true,
+    "editor.tabSize": 2,
+    "files.autoSave": "afterDelay",
+    "editor.fontSize": 14,
+    "workbench.colorTheme": "Solarized Dark",
+    "remote.SSH.remotePlatform": {
+        "*.gitpod.local": "linux",
+        "*.gitpod.remote": "linux"
+    }
 }

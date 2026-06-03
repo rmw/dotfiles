@@ -1,0 +1,7 @@
+brew "atuin"
+brew "gh"
+brew "gnupg"
+brew "libyaml"
+brew "mise"
+brew "python"
+brew "pyenv"

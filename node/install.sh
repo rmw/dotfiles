@@ -1,27 +1,31 @@
-if test $(command -v brew); then
-  if test ! $(command -v gpg); then
-    echo 'Installing gnupg...'
-    brew install gnupg
-  fi
-  if test ! $(command -v mise); then
-    echo 'Installing mise...'
-    brew install mise
-  fi
+#!/bin/sh
+# Node
+# Install and globally set latest node using mise.
+
+if ! command -v brew >/dev/null 2>&1; then
+  echo 'Homebrew is not available; skipping node setup.'
+  exit 0
 fi
 
-# Install and globally set latest node using mise
-if test $(command -v mise); then
-  echo 'Installing and globally setting latest node with mise...'
+if ! command -v mise >/dev/null 2>&1; then
+  echo 'Installing mise via Homebrew...'
+  brew install mise
+fi
+
+if command -v mise >/dev/null 2>&1; then
+  echo 'Installing and setting latest node with mise...'
   mise install node@latest
-  mise global node@latest
-  echo 'Installing latest yarn with npm...'
-  npm install -g yarn
+  mise use node@latest
+  if command -v npm >/dev/null 2>&1; then
+    echo 'Installing latest yarn with npm...'
+    npm install -g yarn
+  else
+    echo 'npm not found after node install; skipping yarn installation.'
+  fi
 fi
 
-if test ! $(command -v spoof)
-then
-  if test $(command -v npm)
-  then
+if ! command -v spoof >/dev/null 2>&1; then
+  if command -v npm >/dev/null 2>&1; then
     echo 'Installing spoof ...'
     sudo npm install spoof -g
   fi

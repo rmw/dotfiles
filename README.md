@@ -31,9 +31,7 @@ Everything's built around topic areas. If you're adding a new area — say,
 | `aws/` | AWS CLI |
 | `data_stores/` | Databases (Postgres, Redis, etc.) |
 | `functions/` | Shell utility functions |
-| `gh/` | GitHub CLI |
 | `git/` | Git config, aliases, completion |
-| `heroku/` | Heroku CLI |
 | `homebrew/` | Homebrew package manager |
 | `macos/` | macOS system preferences & updates |
 | `mise/` | mise version manager |
@@ -86,6 +84,20 @@ which sets up a few paths that'll be different on your particular machine.
 defaults, and so on. Tweak this script, and occasionally run `dot` from
 time to time to keep your environment fresh and up-to-date. You can find
 this script in `bin/`.
+
+### macOS software updates
+
+The macOS installer only runs `sudo softwareupdate -i -a` when explicitly requested. Pass `--macos-update` to enable this behavior.
+
+```sh
+./script/install --macos-update
+```
+
+Or run the macOS installer directly:
+
+```sh
+./macos/install.sh --macos-update
+```
 
 ## thanks
 

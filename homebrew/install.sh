@@ -18,7 +18,25 @@ then
   then
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   fi
- 
+fi
+
+# Ensure the installed brew is available in this shell for bundle execution
+if test -x /opt/homebrew/bin/brew
+then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+elif test -x /home/linuxbrew/.linuxbrew/bin/brew
+then
+  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+fi
+
+# Use a Brewfile when one exists
+BREWFILE="homebrew/Brewfile"
+if test -x "$(command -v brew)" && test -f "$BREWFILE"
+then
+  echo "› brew update"
+  brew update
+  echo "› brew bundle --file=$BREWFILE"
+  brew bundle --file="$BREWFILE"
 fi
 
 exit 0
