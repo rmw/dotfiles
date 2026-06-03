@@ -57,12 +57,12 @@ directory_name() {
 battery_status() {
   if test ! "$(uname)" = "Darwin"
   then
-    exit 0
+    return 0
   fi
 
-  if [[ $(sysctl -n hw.model) == *"Book"* ]]
+  if [[ -x "$ZSH/bin/battery-status" ]]
   then
-    $ZSH/bin/battery-status
+    "$ZSH/bin/battery-status"
   fi
 }
 
